@@ -8,4 +8,14 @@
 	</nav>
 </template>
 
-<style></style>
+<script>
+	export default {
+		name: 'Navbar',
+	}
+</script>
+
+<style>
+	nav {
+		width: 100%;
+	}
+</style>

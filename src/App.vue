@@ -1,19 +1,24 @@
 <template>
 	<div id="app">
-		<navbar></navbar>
-    <h1>Teste Inicial</h1>
-		
+		<div class="nav">
+			<navbar></navbar>
+		</div>
+		<div class="resto">
+			<filtros></filtros>
+		</div>
 	</div>
 </template>
 
 <script>
 import Paises from './services/paises';
 import Navbar from './components/navbar.vue';
+import Filtros from './components/filtros.vue';
 
 export default {
 	name: 'App',
 	components: {
-		Navbar
+		Navbar,
+		Filtros
 	},
 
 	data() {
@@ -25,13 +30,22 @@ export default {
 	mounted() {
 		Paises.listarTodos().then(resposta => {
 			this.paises = resposta.data;
-      console.log(this.paises);
-      console.log(this.paises[0].name)
+			console.log(this.paises);
+			console.log(this.paises[0].name);
 		});
 	}
 };
 </script>
 
 <style>
+#app {
+	font-family: 'Montserrat', sans-serif;
+	font-style: normal;
+	font-weight: normal;
+}
 
+.resto {
+	margin-top: 2rem;
+	margin-left: 3rem;
+}
 </style>
