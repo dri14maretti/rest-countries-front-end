@@ -3,7 +3,7 @@
 		<div class="md-layout-item">
 			<label for="filter" class="title">Filtrar por</label>
             <md-field>	
-				<md-select v-model="filter" name="filter" id="filter">
+				<md-select v-model="filter" >
 					<md-option
 						v-for="filtro in tiposDeFiltro"
 						:value="filtro"
@@ -28,7 +28,7 @@ export default {
 			{ id: 3, name: 'País', value: 'country' },
 			{ id: 4, name: 'Código de ligação', value: 'callingcode' }
 		],
-		filter: ''
+		filter: { id: 0, name: 'Região', value: 'region' },
 	})
 };
 </script>

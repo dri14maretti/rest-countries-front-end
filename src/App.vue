@@ -45,7 +45,7 @@ export default {
 }
 
 .resto {
-	margin-top: 2rem;
+	margin-top: 3rem;
 	margin-left: 3rem;
 }
 </style>
