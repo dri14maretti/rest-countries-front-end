@@ -4,8 +4,12 @@
 			<navbar></navbar>
 		</div>
 		<div class="resto">
-			<filtros></filtros>
-      <mostrar-paises :paisesRecebidos="paises"></mostrar-paises>
+			<v-container fluid>
+				<v-row align="center">
+					<filtros @filtroPassado="filtrarPaises($event)"></filtros>
+					<mostrar-paises :paisesRecebidos="paises"></mostrar-paises>
+				</v-row>
+			</v-container>
 		</div>
 	</div>
 </template>
@@ -13,7 +17,7 @@
 <script>
 import Navbar from './components/navbar.vue';
 import Filtros from './components/filtros.vue';
-import { http } from './services/config'
+import { http } from './services/config';
 import MostrarPaises from './components/mostrarPaises.vue';
 
 export default {
@@ -21,15 +25,15 @@ export default {
 	components: {
 		Navbar,
 		Filtros,
-    MostrarPaises
+		MostrarPaises
 	},
 
 	data() {
 		return {
 			paises: [],
-      listarTodos: (value="all") => {
-        return http.get(value)
-      }
+			listarTodos: (value = 'all') => {
+				return http.get(value);
+			}
 		};
 	},
 
@@ -39,6 +43,15 @@ export default {
 			console.log(this.paises);
 			console.log(this.paises[0]);
 		});
+	},
+
+	methods: {
+		filtrarPaises(valor) {
+			this.listarTodos(valor).then(resposta => {
+				this.paises = resposta.data;
+				console.log(this.paises);
+			});
+		}
 	}
 };
 </script>
@@ -46,14 +59,13 @@ export default {
 <style>
 #app {
 	width: 100%;
-  font-family: 'Montserrat', sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	font-style: normal;
 	font-weight: normal;
 }
 
-
 .resto {
-  margin-top: 3rem;
+	margin-top: 3rem;
 	margin-left: 3rem;
 }
 </style>
