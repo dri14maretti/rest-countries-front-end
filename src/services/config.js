@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const http = axios.create({
-    baseURL: 'https://restcountries.eu/rest/v2/all'
+    baseURL: 'https://restcountries.eu/rest/v2'
 })

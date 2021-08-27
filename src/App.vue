@@ -5,33 +5,39 @@
 		</div>
 		<div class="resto">
 			<filtros></filtros>
+      <mostrar-paises :paisesRecebidos="paises"></mostrar-paises>
 		</div>
 	</div>
 </template>
 
 <script>
-import Paises from './services/paises';
 import Navbar from './components/navbar.vue';
 import Filtros from './components/filtros.vue';
+import { http } from './services/config'
+import MostrarPaises from './components/mostrarPaises.vue';
 
 export default {
 	name: 'App',
 	components: {
 		Navbar,
-		Filtros
+		Filtros,
+    MostrarPaises
 	},
 
 	data() {
 		return {
-			paises: []
+			paises: [],
+      listarTodos: (value="all") => {
+        return http.get(value)
+      }
 		};
 	},
 
 	mounted() {
-		Paises.listarTodos().then(resposta => {
+		this.listarTodos().then(resposta => {
 			this.paises = resposta.data;
 			console.log(this.paises);
-			console.log(this.paises[0].name);
+			console.log(this.paises[0]);
 		});
 	}
 };
@@ -39,13 +45,15 @@ export default {
 
 <style>
 #app {
-	font-family: 'Montserrat', sans-serif;
+	width: 100%;
+  font-family: 'Montserrat', sans-serif;
 	font-style: normal;
 	font-weight: normal;
 }
 
+
 .resto {
-	margin-top: 3rem;
+  margin-top: 3rem;
 	margin-left: 3rem;
 }
 </style>

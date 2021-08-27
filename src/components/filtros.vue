@@ -1,20 +1,11 @@
 <template>
-	<div class="md-layout md-gutter">
-		<div class="md-layout-item">
-			<label for="filter" class="title">Filtrar por</label>
-            <md-field>	
-				<md-select v-model="filter" >
-					<md-option
-						v-for="filtro in tiposDeFiltro"
-						:value="filtro"
-						:key="filtro.id"
-					>
-						{{ filtro.name }}
-					</md-option>
-				</md-select>
-			</md-field>
-		</div>
-	</div>
+	<v-container fluid>
+		<v-row align="center">
+			<v-col class="d-flex" cols="12" sm="6">
+				<v-select v-model="filter.name" :items="tiposDeFiltro.name" label="Standard" class="purple--text"></v-select>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script>
@@ -35,9 +26,9 @@ export default {
 
 <style>
 .title {
-    color: #6D2080;
-    margin-bottom: 0;
-    font-size: 14px
+	color: #6d2080;
+	margin-bottom: 0;
+	font-size: 14px;
 }
 
 .md-layout {
