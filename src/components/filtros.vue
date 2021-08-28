@@ -2,20 +2,21 @@
 	<div data-app>
 		<v-container fluid>
 			<v-row justify="center">
-				<v-col class="d-flex" cols="12" sm="3">
+				<v-col class="d-flex" cols="12" sm="2">
 					<v-select
 						v-model="filter"
 						:items="tiposDeFiltro"
 						item-text="name"
 						label="Filtrar por"
+						color="#6d2080"
 						placeholder="Escolha uma das opções"
-						class="purple--text"
 						@change="filtroSelecionado()"
 						return-object
+						dense
 					></v-select>
 				</v-col>
 
-				<v-col class="d-flex" cols="12" sm="3">
+				<v-col class="d-flex" cols="12" sm="2">
 					<v-select
 						v-if="isRegion"
 						v-model="filtroDeRegiaoSelecionado"
@@ -23,11 +24,36 @@
 						item-text="name"
 						item-value="value"
 						label="Região"
+						color="#6d2080"
 						placeholder="Escolha a região"
 						class="purple--text"
-						@change="regiaoSelecionada()"
 						return-object
+						dense
 					></v-select>
+					<v-text-field
+						v-if="isOther"
+						v-model="filtroOutroSelecionado"
+						:label="filter.name"
+						:placeholder="
+							`Digite ${
+								this.filter.value === 'callingcode' ||
+								this.filter.value === 'country'
+									? 'o'
+									: 'a'
+							} ${this.filter.name.toLowerCase()}`
+						"
+						@change="outroFiltroSelecionado()"
+						dense
+					></v-text-field>
+				</v-col>
+
+				<v-col class="d-flex" cols="12" sm="3">
+					<v-btn
+						v-on:click="filtrar()"
+						color="#6d2080"
+						:disabled="!filtroDeRegiaoSelecionado && !filtroOutroSelecionado"
+						><span style="color: #ebebeb">Pesquisar</span></v-btn
+					>
 				</v-col>
 			</v-row>
 
@@ -46,7 +72,7 @@ export default {
 			{ id: 0, name: 'Região', value: 'region' },
 			{ id: 1, name: 'Capital', value: 'capital' },
 			{ id: 2, name: 'Língua', value: 'lang' },
-			{ id: 3, name: 'País', value: 'country' },
+			{ id: 3, name: 'País', value: 'name' },
 			{ id: 4, name: 'Código de ligação', value: 'callingcode' }
 		],
 		filter: {},
@@ -59,7 +85,8 @@ export default {
 			{ name: 'Oceania', value: 'oceania' }
 		],
 		isRegion: false,
-		isOther: false
+		isOther: false,
+		filtroOutroSelecionado: ''
 	}),
 
 	methods: {
@@ -69,9 +96,12 @@ export default {
 			if (filtroEscolhido === 'region') {
 				this.isRegion = true;
 				this.isOther = false;
+				this.filtroOutroSelecionado = '';
 				return;
 			}
 
+			this.filtroOutroSelecionado = '';
+			this.filtroDeRegiaoSelecionado = '';
 			this.isRegion = false;
 			this.isOther = true;
 		},
@@ -81,19 +111,19 @@ export default {
 				'filtroPassado',
 				`${this.filter.value}/${this.filtroDeRegiaoSelecionado.value}`
 			);
+		},
+
+		outroFiltroSelecionado() {
+			this.$emit(
+				'filtroPassado',
+				`${this.filter.value}/${this.filtroOutroSelecionado.toLowerCase()}`
+			);
+		},
+
+		filtrar() {
+			if (this.filter.value == 'region') this.regiaoSelecionada();
+			else this.outroFiltroSelecionado();
 		}
 	}
 };
 </script>
-
-<style>
-.title {
-	color: #6d2080;
-	margin-bottom: 0;
-	font-size: 14px;
-}
-
-.md-layout {
-	width: 10%;
-}
-</style>
