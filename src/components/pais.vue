@@ -43,8 +43,8 @@
 							><v-list-item-title>Línguas: </v-list-item-title>
 							<v-list-item-title
 								v-for="lingua of paisRecebido.languages"
-								:key="lingua.name"
-								>{{ lingua.name }}</v-list-item-title
+								:key="lingua.nativeName"
+								>{{ lingua.nativeName }}</v-list-item-title
 							>
 						</v-list-item-content></v-list-item
 					></v-list
