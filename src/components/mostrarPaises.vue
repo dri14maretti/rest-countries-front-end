@@ -1,10 +1,11 @@
 <template>
 	<v-container>
 		<v-row justify="center">
-			<a href="#">
+			<a>
 				<img
 					class="flags text-center"
-					v-for="pais of paisesRecebidos"
+					v-for="pais of vetorQuebrado"
+					v-on:click="enviarPais(pais)"
 					:src="pais.flag"
 					:key="pais.name"
 					:alt="pais.name"
@@ -12,9 +13,10 @@
 			</a>
 			<v-pagination
 				v-model="page"
-				:length="15"
-				total-visible="6"
+				:length="Math.ceil(paisesRecebidos.length / totalVisivel)"
+				:total-visible="totalVisivel"
 				color="#6d2080"
+				@input="metodoPaginacao()"
 			>
 			</v-pagination>
 		</v-row>
@@ -26,12 +28,47 @@ import { defineComponent } from '@vue/composition-api';
 
 export default defineComponent({
 	setup() {},
-	props: ['paisesRecebidos'],
+	props: {
+		paisesRecebidos: {
+			type: Array,
+			default: {
+				name: '',
+				flag: ''
+			}
+		}
+	},
 	data: () => ({
-		page: 1
+		page: 1,
+		totalVisivel: 12,
+		vetorQuebrado: []
 	}),
 	mounted() {
-		console.log(this.paisesRecebidos);
+		this.metodoPaginacao();
+	},
+
+	methods: {
+		metodoPaginacao() {
+			this.vetorQuebrado = [];
+
+			for (
+				let i = this.totalVisivel * (this.page - 1);
+				i < this.totalVisivel * this.page;
+				i++
+			) {
+				if (i < this.paisesRecebidos.length)
+					this.vetorQuebrado.push(this.paisesRecebidos[i]);
+			}
+		},
+
+		enviarPais(paisEscolhido) {
+			this.$emit('receberPais', paisEscolhido);
+		}
+	},
+
+	watch: {
+		paisesRecebidos() {
+			this.metodoPaginacao();
+		}
 	}
 });
 </script>
@@ -42,5 +79,6 @@ export default defineComponent({
 	height: 20rem;
 	margin-right: 3rem;
 	margin-bottom: 2rem;
+	cursor: pointer;
 }
 </style>
