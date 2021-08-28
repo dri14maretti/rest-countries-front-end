@@ -111,6 +111,7 @@ export default {
 <style>
 a {
 	color: #6d2080;
+	cursor: pointer;
 }
 
 h2 {
