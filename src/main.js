@@ -9,6 +9,6 @@ Vue.use(VueMaterial)
 Vue.use(vuetify);
 
 new Vue({
-  vuetify,
-  render: h => h(App)
+	vuetify,
+	render: h => h(App)
 }).$mount('#app')
