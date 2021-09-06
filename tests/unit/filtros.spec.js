@@ -30,14 +30,13 @@ describe('Filtros', () => {
         const wrapper = mount(Filtros, {
             localVue,
             vuetify,
-            propsData: { isRegion: true }
         })
 
-        const selectRegiao = wrapper.find('#filtro');
+        wrapper.setData({ isRegion: true });
         await wrapper.vm.$nextTick();
+        const selectRegiao = wrapper.find('#regiao');
 
 
         expect(selectRegiao.exists()).toBe(true);
-        expect(selectRegiao.text()).toBe('');
     })
 })
