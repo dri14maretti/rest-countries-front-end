@@ -6,8 +6,7 @@ import 'vue-material/dist/vue-material.min.css'
 import vuetify from './plugins/vuetify'
 
 Vue.use(VueMaterial)
-
-Vue.config.productionTip = false
+Vue.use(vuetify);
 
 new Vue({
   vuetify,
