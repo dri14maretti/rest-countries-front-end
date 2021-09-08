@@ -26,6 +26,8 @@ describe('Filtros', () => {
         expect(selectRegiao.exists()).toEqual(false);
     })
 
+    // testa se existe o id de regiao no caso de ter sido selecionado o filtro de regiao e a varia´vale isRegion seja true
+
     it('Se a variável isRegion for true, deverá aparecer um select de região', async () => {
         const wrapper = mount(Filtros, {
             localVue,
