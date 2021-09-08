@@ -45,7 +45,9 @@
 									: 'a'
 							} ${this.filter.name.toLowerCase()}`
 						"
+						:name="filter.name"
 						@change="outroFiltroSelecionado()"
+						id="outro"
 						dense
 					></v-text-field>
 				</v-col>
