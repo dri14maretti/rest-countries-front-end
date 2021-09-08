@@ -13,12 +13,14 @@
 						@change="filtroSelecionado()"
 						return-object
 						dense
+						id="filtro"
 					></v-select>
 				</v-col>
 
 				<v-col class="d-flex" cols="12" sm="2">
 					<v-select
 						v-if="isRegion"
+						data-testid="select-region"
 						v-model="filtroDeRegiaoSelecionado"
 						:items="regions"
 						item-text="name"
@@ -27,6 +29,7 @@
 						color="#6d2080"
 						placeholder="Escolha a região"
 						class="purple--text"
+						id="regiao"
 						return-object
 						dense
 					></v-select>
@@ -66,62 +69,61 @@
 
 <script>
 export default {
-	setup() {},
 	data: () => ({
 		tiposDeFiltro: [
-			{ id: 0, name: 'Região', value: 'region' },
-			{ id: 1, name: 'Capital', value: 'capital' },
-			{ id: 2, name: 'Língua', value: 'lang' },
-			{ id: 3, name: 'País', value: 'name' },
-			{ id: 4, name: 'Código de ligação', value: 'callingcode' }
+			{ id: 0, name: "Região", value: "region" },
+			{ id: 1, name: "Capital", value: "capital" },
+			{ id: 2, name: "Língua", value: "lang" },
+			{ id: 3, name: "País", value: "name" },
+			{ id: 4, name: "Código de ligação", value: "callingcode" }
 		],
 		filter: {},
-		filtroDeRegiaoSelecionado: '',
+		filtroDeRegiaoSelecionado: "",
 		regions: [
-			{ name: 'África', value: 'africa' },
-			{ name: 'América', value: 'americas' },
-			{ name: 'Asia', value: 'asia' },
-			{ name: 'Europa', value: 'europe' },
-			{ name: 'Oceania', value: 'oceania' }
+			{ name: "África", value: "africa" },
+			{ name: "América", value: "americas" },
+			{ name: "Asia", value: "asia" },
+			{ name: "Europa", value: "europe" },
+			{ name: "Oceania", value: "oceania" }
 		],
 		isRegion: false,
 		isOther: false,
-		filtroOutroSelecionado: ''
+		filtroOutroSelecionado: ""
 	}),
 
 	methods: {
 		filtroSelecionado() {
 			const filtroEscolhido = this.filter.value;
 
-			if (filtroEscolhido === 'region') {
+			if (filtroEscolhido === "region") {
 				this.isRegion = true;
 				this.isOther = false;
-				this.filtroOutroSelecionado = '';
+				this.filtroOutroSelecionado = "";
 				return;
 			}
 
-			this.filtroOutroSelecionado = '';
-			this.filtroDeRegiaoSelecionado = '';
+			this.filtroOutroSelecionado = "";
+			this.filtroDeRegiaoSelecionado = "";
 			this.isRegion = false;
 			this.isOther = true;
 		},
 
 		regiaoSelecionada() {
 			this.$emit(
-				'filtroPassado',
+				"filtroPassado",
 				`${this.filter.value}/${this.filtroDeRegiaoSelecionado.value}`
 			);
 		},
 
 		outroFiltroSelecionado() {
 			this.$emit(
-				'filtroPassado',
+				"filtroPassado",
 				`${this.filter.value}/${this.filtroOutroSelecionado.toLowerCase()}`
 			);
 		},
 
 		filtrar() {
-			if (this.filter.value == 'region') this.regiaoSelecionada();
+			if (this.filter.value == "region") this.regiaoSelecionada();
 			else this.outroFiltroSelecionado();
 		}
 	}
